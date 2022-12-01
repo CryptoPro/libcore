@@ -1,10 +1,12 @@
 ﻿# LibCore
 
+[Текущий релиз](https://github.com/CryptoPro/libcore/releases).
+
 Для работы библиотеки необходима последняя актуальная версия КриптоПро CSP 5.0.
 
 Также необходима установка [sdk и runtime dotnet 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 
-Поддерживается только dotnet 6.
+Поддерживается **только** dotnet 6.
 
 Интерфейсы и классы во многом аналогичны corefx и КриптоПро.NET.
 
@@ -44,7 +46,7 @@ LibCore.Initializer.Initialize();
   - [Asymmetric KeyExchange (key encryption)](#key-exchange)
 
 ## <a id="init"> Установка и инициализация библиотеки
-Скачать nuget пакет `LibCore.Linux.XXXX.XX.XX.nupkg` или `LibCore.Windows.XXXX.XX.XX.nupkg`
+Скачать nuget пакет `LibCore.Linux.XXXX.XX.XX.nupkg` или `LibCore.Windows.XXXX.XX.XX.nupkg` из текущего [релиза](https://github.com/CryptoPro/libcore/releases)
 в папку по некоторому пути `packages_PATH`.
 
 Изменить файл `%appdata%\NuGet\NuGet.Config` (Windows) или 
