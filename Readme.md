@@ -7,6 +7,10 @@
 Также необходима установка [sdk и runtime dotnet 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 
 Поддерживается **только** dotnet 6.
+т.е. в csproj должен быть явно указан
+```xml
+<TargetFramework>net6.0</TargetFramework>
+```
 
 Интерфейсы и классы во многом аналогичны corefx и КриптоПро.NET.
 
