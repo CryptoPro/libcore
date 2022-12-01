@@ -1,53 +1,57 @@
-# LibCore
+п»ї# LibCore
 
-Для работы библиотеки необходима последняя актуальная версия КриптоПро CSP 5.0.
+Р”Р»СЏ СЂР°Р±РѕС‚С‹ Р±РёР±Р»РёРѕС‚РµРєРё РЅРµРѕР±С…РѕРґРёРјР° РїРѕСЃР»РµРґРЅСЏСЏ Р°РєС‚СѓР°Р»СЊРЅР°СЏ РІРµСЂСЃРёСЏ РљСЂРёРїС‚РѕРџСЂРѕ CSP 5.0.
 
-Интерфейсы и классы во многом аналогичны corefx и КриптоПро.NET.
+РўР°РєР¶Рµ РЅРµРѕР±С…РѕРґРёРјР° СѓСЃС‚Р°РЅРѕРІРєР° [sdk Рё runtime dotnet 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 
-В настоящий момент в работе/не реализовано:
+РџРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ dotnet 6.
 
-* CMS шифрование (`EnvelopedCms`)
-* XML шифрование (`EncryptedXml`)
+РРЅС‚РµСЂС„РµР№СЃС‹ Рё РєР»Р°СЃСЃС‹ РІРѕ РјРЅРѕРіРѕРј Р°РЅР°Р»РѕРіРёС‡РЅС‹ corefx Рё РљСЂРёРїС‚РѕРџСЂРѕ.NET.
 
-## Известные проблемы
-При использовании исправлений сборок `System.Security.Pkcs` перед инициализацией бибилиотеки
-необходимо создать объект класса `CmsSigner` для форсирования инициализации сборки.
+Р’ РЅР°СЃС‚РѕСЏС‰РёР№ РјРѕРјРµРЅС‚ РІ СЂР°Р±РѕС‚Рµ/РЅРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ:
+
+* CMS С€РёС„СЂРѕРІР°РЅРёРµ (`EnvelopedCms`)
+* XML С€РёС„СЂРѕРІР°РЅРёРµ (`EncryptedXml`)
+
+## РР·РІРµСЃС‚РЅС‹Рµ РїСЂРѕР±Р»РµРјС‹
+РџСЂРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё РёСЃРїСЂР°РІР»РµРЅРёР№ СЃР±РѕСЂРѕРє `System.Security.Pkcs` РїРµСЂРµРґ РёРЅРёС†РёР°Р»РёР·Р°С†РёРµР№ Р±РёР±РёР»РёРѕС‚РµРєРё
+РЅРµРѕР±С…РѕРґРёРјРѕ СЃРѕР·РґР°С‚СЊ РѕР±СЉРµРєС‚ РєР»Р°СЃСЃР° `CmsSigner` РґР»СЏ С„РѕСЂСЃРёСЂРѕРІР°РЅРёСЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё СЃР±РѕСЂРєРё.
 
 ```csharp
 var signed = new CmsSigner();
 LibCore.Initializer.Initialize();
 ```
 
-## Примеры
+## РџСЂРёРјРµСЂС‹
 
- - [Установка и инициализация библиотеки](#init) 
- - [Загрузка сертификата из pfx файла](#file-pfx) 
- - [Загрузка сертификата из хранилища](#store-pfx) 
- - [Создание сертификата](#pfx-create)
+ - [РЈСЃС‚Р°РЅРѕРІРєР° Рё РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р±РёР±Р»РёРѕС‚РµРєРё](#init) 
+ - [Р—Р°РіСЂСѓР·РєР° СЃРµСЂС‚РёС„РёРєР°С‚Р° РёР· pfx С„Р°Р№Р»Р°](#file-pfx) 
+ - [Р—Р°РіСЂСѓР·РєР° СЃРµСЂС‚РёС„РёРєР°С‚Р° РёР· С…СЂР°РЅРёР»РёС‰Р°](#store-pfx) 
+ - [РЎРѕР·РґР°РЅРёРµ СЃРµСЂС‚РёС„РёРєР°С‚Р°](#pfx-create)
  - [SignedXml](#signed-xml)
-   - [Подпись](#signed-xml-sign)
-   - [Проверка](#signed-xml-verify)
+   - [РџРѕРґРїРёСЃСЊ](#signed-xml-sign)
+   - [РџСЂРѕРІРµСЂРєР°](#signed-xml-verify)
 - [SignedCms](#signed-cms)
   - [Attached](#signed-cms-attached)
   - [Detached](#signed-cms-detached)  
- - [Работа с контейнерами и провайдерами](#container)
-    - [Открытие контейнера ключа](#open-container)
-    - [Создание ключевого контейнера](#create-container)
-    - [Выставление OID](#set-oid)
- - [Ключевой транспорт, KeyWrap](#key)
+ - [Р Р°Р±РѕС‚Р° СЃ РєРѕРЅС‚РµР№РЅРµСЂР°РјРё Рё РїСЂРѕРІР°Р№РґРµСЂР°РјРё](#container)
+    - [РћС‚РєСЂС‹С‚РёРµ РєРѕРЅС‚РµР№РЅРµСЂР° РєР»СЋС‡Р°](#open-container)
+    - [РЎРѕР·РґР°РЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РєРѕРЅС‚РµР№РЅРµСЂР°](#create-container)
+    - [Р’С‹СЃС‚Р°РІР»РµРЅРёРµ OID](#set-oid)
+ - [РљР»СЋС‡РµРІРѕР№ С‚СЂР°РЅСЃРїРѕСЂС‚, KeyWrap](#key)
   - [Symmetric KeyWrap](#key-wrap)
   - [Asymmetric agree (DH)](#key-agree)
   - [Asymmetric KeyExchange (key encryption)](#key-exchange)
 
-## <a id="init"> Установка и инициализация библиотеки
-Скачать nuget пакет `LibCore.Linux.XXXX.XX.XX.nupkg` или `LibCore.Windows.XXXX.XX.XX.nupkg`
-в папку по некоторому пути `packages_PATH`.
+## <a id="init"> РЈСЃС‚Р°РЅРѕРІРєР° Рё РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р±РёР±Р»РёРѕС‚РµРєРё
+РЎРєР°С‡Р°С‚СЊ nuget РїР°РєРµС‚ `LibCore.Linux.XXXX.XX.XX.nupkg` РёР»Рё `LibCore.Windows.XXXX.XX.XX.nupkg`
+РІ РїР°РїРєСѓ РїРѕ РЅРµРєРѕС‚РѕСЂРѕРјСѓ РїСѓС‚Рё `packages_PATH`.
 
-Изменить файл `%appdata%\NuGet\NuGet.Config` (Windows) или 
-`~/.nuget/NuGet/NuGet.Config` (Linux), добавив в начало узла 
-`packageSources` источник `<add key="local packages" value="packages_PATH" />`.
+РР·РјРµРЅРёС‚СЊ С„Р°Р№Р» `%appdata%\NuGet\NuGet.Config` (Windows) РёР»Рё 
+`~/.nuget/NuGet/NuGet.Config` (Linux), РґРѕР±Р°РІРёРІ РІ РЅР°С‡Р°Р»Рѕ СѓР·Р»Р° 
+`packageSources` РёСЃС‚РѕС‡РЅРёРє `<add key="local packages" value="packages_PATH" />`.
 
-Пример:
+РџСЂРёРјРµСЂ:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -59,7 +63,7 @@ LibCore.Initializer.Initialize();
 </configuration>
 ```
 
-Для использования бибилиотеки необходимо однократно вызвать инициализацию:
+Р”Р»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ Р±РёР±РёР»РёРѕС‚РµРєРё РЅРµРѕР±С…РѕРґРёРјРѕ РѕРґРЅРѕРєСЂР°С‚РЅРѕ РІС‹Р·РІР°С‚СЊ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЋ:
 ```csharp
 using LibCore;
 
@@ -76,8 +80,8 @@ namespace Sample
 }
 ```
 
-В `Initialize(...)` можно указать только требуемые библиотеки, использование 
-которых предполагается в рамках проекта.
+Р’ `Initialize(...)` РјРѕР¶РЅРѕ СѓРєР°Р·Р°С‚СЊ С‚РѕР»СЊРєРѕ С‚СЂРµР±СѓРµРјС‹Рµ Р±РёР±Р»РёРѕС‚РµРєРё, РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ 
+РєРѕС‚РѕСЂС‹С… РїСЂРµРґРїРѕР»Р°РіР°РµС‚СЃСЏ РІ СЂР°РјРєР°С… РїСЂРѕРµРєС‚Р°.
 ```csharp
 using LibCore;
 
@@ -87,10 +91,10 @@ namespace Sample
     {
         public static void Main(string[] args)
         {
-            // Инициализируем LibCore для использования XML подписи.
-            // Исправления для TLS и PKCS не будут установлены.
-            // Исправления для Csp, Algorithms и Primitives будут установлены
-            // т.к. от них зависят исправления XML.
+            // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј LibCore РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ XML РїРѕРґРїРёСЃРё.
+            // РСЃРїСЂР°РІР»РµРЅРёСЏ РґР»СЏ TLS Рё PKCS РЅРµ Р±СѓРґСѓС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅС‹.
+            // РСЃРїСЂР°РІР»РµРЅРёСЏ РґР»СЏ Csp, Algorithms Рё Primitives Р±СѓРґСѓС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅС‹
+            // С‚.Рє. РѕС‚ РЅРёС… Р·Р°РІРёСЃСЏС‚ РёСЃРїСЂР°РІР»РµРЅРёСЏ XML.
             LibCore.Initializer.Initialize(LibCore.Initializer.DetouredAssembly.Xml);
             // ready to go!
         }
@@ -98,7 +102,7 @@ namespace Sample
 }
 ```
 
-## <a id="file-pfx"> Загрузка сертификата из хранилища
+## <a id="file-pfx"> Р—Р°РіСЂСѓР·РєР° СЃРµСЂС‚РёС„РёРєР°С‚Р° РёР· С…СЂР°РЅРёР»РёС‰Р°
 ```csharp
 // unix, using CpX509Store
 using (var store = new CpX509Store(StoreName.My, StoreLocation.CurrentUser))
@@ -117,7 +121,7 @@ using (var store = new X509Store(StoreName.My, StoreLocation.CurrentUser))
 }
 ```
 
-## <a id="file-pfx"> Загрузка сертификата из pfx файла
+## <a id="file-pfx"> Р—Р°РіСЂСѓР·РєР° СЃРµСЂС‚РёС„РёРєР°С‚Р° РёР· pfx С„Р°Р№Р»Р°
 
 ```csharp
 public static void ImportGostPfxWithNonPersistKey()
@@ -147,7 +151,7 @@ public static void ImportGostPfxWithNonPersistKey()
 }
 ```
 
-## <a id="pfx-create"> Создание сертификата
+## <a id="pfx-create"> РЎРѕР·РґР°РЅРёРµ СЃРµСЂС‚РёС„РёРєР°С‚Р°
 
 ```csharp
 var certificateRequest = new CpCertificateRequest(
@@ -163,7 +167,7 @@ certificateRequest.CertificateExtensions.Add(
         false));
 
 var oidCollection = new OidCollection();
-// Проверка подлинности клиента (1.3.6.1.5.5.7.3.2)
+// РџСЂРѕРІРµСЂРєР° РїРѕРґР»РёРЅРЅРѕСЃС‚Рё РєР»РёРµРЅС‚Р° (1.3.6.1.5.5.7.3.2)
 oidCollection.Add(new Oid("1.3.6.1.5.5.7.3.2"));
 
 certificateRequest.CertificateExtensions.Add(
@@ -183,7 +187,7 @@ byte[] file = cert.Export(X509ContentType.Pfx, new SecureString());
 
 ## <a id="signed-xml"> SignedXml
 
-### <a id="signed-xml-sign"> Формирование подписи:
+### <a id="signed-xml-sign"> Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РїРѕРґРїРёСЃРё:
 
 ```csharp
 static XmlDocument SignXmlFile(
@@ -192,70 +196,70 @@ static XmlDocument SignXmlFile(
     X509Certificate Certificate,
     string DigestMethod = CpSignedXml.XmlDsigGost3411_2012_256Url)
 {
-    // Создаем объект SignedXml по XML документу.
+    // РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ SignedXml РїРѕ XML РґРѕРєСѓРјРµРЅС‚Сѓ.
     SignedXml signedXml = new SignedXml(doc);
 
-    // Добавляем ключ в SignedXml документ. 
+    // Р”РѕР±Р°РІР»СЏРµРј РєР»СЋС‡ РІ SignedXml РґРѕРєСѓРјРµРЅС‚. 
        signedXml.SigningKey = Key;
 
-    // Создаем ссылку на node для подписи.
-    // При подписи всего документа проставляем "".
+    // РЎРѕР·РґР°РµРј СЃСЃС‹Р»РєСѓ РЅР° node РґР»СЏ РїРѕРґРїРёСЃРё.
+    // РџСЂРё РїРѕРґРїРёСЃРё РІСЃРµРіРѕ РґРѕРєСѓРјРµРЅС‚Р° РїСЂРѕСЃС‚Р°РІР»СЏРµРј "".
     Reference reference = new Reference();
     reference.Uri = "";
 
-    // Явно проставляем алгоритм хэширования,
-    // по умолчанию SHA1.
+    // РЇРІРЅРѕ РїСЂРѕСЃС‚Р°РІР»СЏРµРј Р°Р»РіРѕСЂРёС‚Рј С…СЌС€РёСЂРѕРІР°РЅРёСЏ,
+    // РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ SHA1.
     reference.DigestMethod = DigestMethod;
 
-    // Добавляем transform на подписываемые данные
-    // для удаления вложенной подписи.
+    // Р”РѕР±Р°РІР»СЏРµРј transform РЅР° РїРѕРґРїРёСЃС‹РІР°РµРјС‹Рµ РґР°РЅРЅС‹Рµ
+    // РґР»СЏ СѓРґР°Р»РµРЅРёСЏ РІР»РѕР¶РµРЅРЅРѕР№ РїРѕРґРїРёСЃРё.
     XmlDsigEnvelopedSignatureTransform env =
         new XmlDsigEnvelopedSignatureTransform();
     reference.AddTransform(env);
 
-    // Добавляем СМЭВ трансформ.
-    // начиная с .NET 4.5.1 для проверки подписи, необходимо добавить этот трансформ в довернные:
+    // Р”РѕР±Р°РІР»СЏРµРј РЎРњР­Р’ С‚СЂР°РЅСЃС„РѕСЂРј.
+    // РЅР°С‡РёРЅР°СЏ СЃ .NET 4.5.1 РґР»СЏ РїСЂРѕРІРµСЂРєРё РїРѕРґРїРёСЃРё, РЅРµРѕР±С…РѕРґРёРјРѕ РґРѕР±Р°РІРёС‚СЊ СЌС‚РѕС‚ С‚СЂР°РЅСЃС„РѕСЂРј РІ РґРѕРІРµСЂРЅРЅС‹Рµ:
     // signedXml.SafeCanonicalizationMethods.Add("urn://smev-gov-ru/xmldsig/transform");
     XmlDsigSmevTransform smev =
         new XmlDsigSmevTransform();
     reference.AddTransform(smev);
 
-    // Добавляем transform для канонизации.
+    // Р”РѕР±Р°РІР»СЏРµРј transform РґР»СЏ РєР°РЅРѕРЅРёР·Р°С†РёРё.
     XmlDsigC14NTransform c14 = new XmlDsigC14NTransform();
     reference.AddTransform(c14);
 
-    // Добавляем ссылку на подписываемые данные
+    // Р”РѕР±Р°РІР»СЏРµРј СЃСЃС‹Р»РєСѓ РЅР° РїРѕРґРїРёСЃС‹РІР°РµРјС‹Рµ РґР°РЅРЅС‹Рµ
     signedXml.AddReference(reference);
 
-    // Создаем объект KeyInfo.
+    // РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ KeyInfo.
     KeyInfo keyInfo = new KeyInfo();
 
-    // Добавляем сертификат в KeyInfo
+    // Р”РѕР±Р°РІР»СЏРµРј СЃРµСЂС‚РёС„РёРєР°С‚ РІ KeyInfo
     keyInfo.AddClause(new KeyInfoX509Data(Certificate));
 
-    // Добавляем KeyInfo в SignedXml.
+    // Р”РѕР±Р°РІР»СЏРµРј KeyInfo РІ SignedXml.
     signedXml.KeyInfo = keyInfo;
 
-    // Можно явно проставить алгоритм подписи: ГОСТ Р 34.10.
-    // Если сертификат ключа подписи ГОСТ Р 34.10
-    // и алгоритм ключа подписи не задан, то будет использован
+    // РњРѕР¶РЅРѕ СЏРІРЅРѕ РїСЂРѕСЃС‚Р°РІРёС‚СЊ Р°Р»РіРѕСЂРёС‚Рј РїРѕРґРїРёСЃРё: Р“РћРЎРў Р  34.10.
+    // Р•СЃР»Рё СЃРµСЂС‚РёС„РёРєР°С‚ РєР»СЋС‡Р° РїРѕРґРїРёСЃРё Р“РћРЎРў Р  34.10
+    // Рё Р°Р»РіРѕСЂРёС‚Рј РєР»СЋС‡Р° РїРѕРґРїРёСЃРё РЅРµ Р·Р°РґР°РЅ, С‚Рѕ Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°РЅ
     // XmlDsigGost3410Url
     // signedXml.SignedInfo.SignatureMethod =
     //     CPSignedXml.XmlDsigGost3410_2012_256Url;
 
-    // Вычисляем подпись.
+    // Р’С‹С‡РёСЃР»СЏРµРј РїРѕРґРїРёСЃСЊ.
     signedXml.ComputeSignature();
 
-    // Получаем XML представление подписи и сохраняем его 
-    // в отдельном node.
+    // РџРѕР»СѓС‡Р°РµРј XML РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РїРѕРґРїРёСЃРё Рё СЃРѕС…СЂР°РЅСЏРµРј РµРіРѕ 
+    // РІ РѕС‚РґРµР»СЊРЅРѕРј node.
     XmlElement xmlDigitalSignature = signedXml.GetXml();
 
-    // Добавляем node подписи в XML документ.
+    // Р”РѕР±Р°РІР»СЏРµРј node РїРѕРґРїРёСЃРё РІ XML РґРѕРєСѓРјРµРЅС‚.
     doc.DocumentElement.AppendChild(doc.ImportNode(
         xmlDigitalSignature, true));
 
-    // При наличии стартовой XML декларации ее удаляем
-    // (во избежание повторного сохранения)
+    // РџСЂРё РЅР°Р»РёС‡РёРё СЃС‚Р°СЂС‚РѕРІРѕР№ XML РґРµРєР»Р°СЂР°С†РёРё РµРµ СѓРґР°Р»СЏРµРј
+    // (РІРѕ РёР·Р±РµР¶Р°РЅРёРµ РїРѕРІС‚РѕСЂРЅРѕРіРѕ СЃРѕС…СЂР°РЅРµРЅРёСЏ)
     if (doc.FirstChild is XmlDeclaration)
     {
         doc.RemoveChild(doc.FirstChild);
@@ -265,30 +269,30 @@ static XmlDocument SignXmlFile(
 }
 ```
 
-### <a id="signed-xml-verify"> Проверка подписи:
+### <a id="signed-xml-verify"> РџСЂРѕРІРµСЂРєР° РїРѕРґРїРёСЃРё:
 
 ```csharp
 static bool ValidateXmlFIle(XmlDocument xmlDocument)
 {
-    // Ищем все node "Signature" и сохраняем их в объекте XmlNodeList
+    // РС‰РµРј РІСЃРµ node "Signature" Рё СЃРѕС…СЂР°РЅСЏРµРј РёС… РІ РѕР±СЉРµРєС‚Рµ XmlNodeList
     XmlNodeList nodeList = xmlDocument.GetElementsByTagName(
         "Signature", SignedXml.XmlDsigNamespaceUrl);
 
-    // Проверяем все подписи.
+    // РџСЂРѕРІРµСЂСЏРµРј РІСЃРµ РїРѕРґРїРёСЃРё.
     bool result = true;
     for (int curSignature = 0; curSignature < nodeList.Count; curSignature++)
     {
-        // Создаем объект SignedXml для проверки подписи документа.
+        // РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ SignedXml РґР»СЏ РїСЂРѕРІРµСЂРєРё РїРѕРґРїРёСЃРё РґРѕРєСѓРјРµРЅС‚Р°.
         SignedXml signedXml = new SignedXml(xmlDocument);
 
-        // начиная с .NET 4.5.1 для проверки подписи, необходимо добавить СМЭВ transform в довернные:
+        // РЅР°С‡РёРЅР°СЏ СЃ .NET 4.5.1 РґР»СЏ РїСЂРѕРІРµСЂРєРё РїРѕРґРїРёСЃРё, РЅРµРѕР±С…РѕРґРёРјРѕ РґРѕР±Р°РІРёС‚СЊ РЎРњР­Р’ transform РІ РґРѕРІРµСЂРЅРЅС‹Рµ:
 
         signedXml.SafeCanonicalizationMethods.Add("urn://smev-gov-ru/xmldsig/transform");
 
-        // Загружаем узел с подписью.
+        // Р—Р°РіСЂСѓР¶Р°РµРј СѓР·РµР» СЃ РїРѕРґРїРёСЃСЊСЋ.
         signedXml.LoadXml((XmlElement)nodeList[curSignature]);
 
-        // Проверяем подпись и выводим результат.
+        // РџСЂРѕРІРµСЂСЏРµРј РїРѕРґРїРёСЃСЊ Рё РІС‹РІРѕРґРёРј СЂРµР·СѓР»СЊС‚Р°С‚.
         result &= signedXml.CheckSignature();
     }
     return result;
@@ -297,7 +301,7 @@ static bool ValidateXmlFIle(XmlDocument xmlDocument)
 
 ## <a id="signed-cms"> SignedCms
 
-### <a id="signed-cms-attached"> Формирование и проверка присоединённой подписи:
+### <a id="signed-cms-attached"> Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ Рё РїСЂРѕРІРµСЂРєР° РїСЂРёСЃРѕРµРґРёРЅС‘РЅРЅРѕР№ РїРѕРґРїРёСЃРё:
 ```csharp
 byte[] signature;
 using (var gostCert = GostNonPersistCmsTests.GetGost2012_256Certificate())
@@ -310,17 +314,17 @@ using (var gostCert = GostNonPersistCmsTests.GetGost2012_256Certificate())
     Console.WriteLine($"CMS Sign: {Convert.ToBase64String(signature)}");
 }
 
-// Создаем SignedCms для декодирования и проверки.
+// РЎРѕР·РґР°РµРј SignedCms РґР»СЏ РґРµРєРѕРґРёСЂРѕРІР°РЅРёСЏ Рё РїСЂРѕРІРµСЂРєРё.
 SignedCms signedCmsVerify = new SignedCms();
 
-// Декодируем подпись
+// Р”РµРєРѕРґРёСЂСѓРµРј РїРѕРґРїРёСЃСЊ
 signedCmsVerify.Decode(signature);
 
-// Проверяем подпись
+// РџСЂРѕРІРµСЂСЏРµРј РїРѕРґРїРёСЃСЊ
 signedCmsVerify.CheckSignature(true);
 ```
 
-### <a id="signed-cms-detached"> Формирование и проверка отсоединённой подписи:
+### <a id="signed-cms-detached"> Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ Рё РїСЂРѕРІРµСЂРєР° РѕС‚СЃРѕРµРґРёРЅС‘РЅРЅРѕР№ РїРѕРґРїРёСЃРё:
 ```csharp
 byte[] signature;
 using (var gostCert = GostNonPersistCmsTests.GetGost2012_256Certificate())
@@ -333,23 +337,23 @@ using (var gostCert = GostNonPersistCmsTests.GetGost2012_256Certificate())
     Console.WriteLine($"CMS Sign: {Convert.ToBase64String(signature)}");
 }
 
-// Создаем объект ContentInfo по сообщению.
-// Это необходимо для создания объекта SignedCms.
+// РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ ContentInfo РїРѕ СЃРѕРѕР±С‰РµРЅРёСЋ.
+// Р­С‚Рѕ РЅРµРѕР±С…РѕРґРёРјРѕ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° SignedCms.
 ContentInfo contentInfoVerify = new ContentInfo(bytesToHash);
 
-// Создаем SignedCms для декодирования и проверки.
+// РЎРѕР·РґР°РµРј SignedCms РґР»СЏ РґРµРєРѕРґРёСЂРѕРІР°РЅРёСЏ Рё РїСЂРѕРІРµСЂРєРё.
 SignedCms signedCmsVerify = new SignedCms(contentInfoVerify, true);
 
-// Декодируем подпись
+// Р”РµРєРѕРґРёСЂСѓРµРј РїРѕРґРїРёСЃСЊ
 signedCmsVerify.Decode(signature);
 
-// Проверяем подпись
+// РџСЂРѕРІРµСЂСЏРµРј РїРѕРґРїРёСЃСЊ
 signedCmsVerify.CheckSignature(true);
 ```
 
-## <a id="container"> Работа с контейнерами и провайдерами
+## <a id="container"> Р Р°Р±РѕС‚Р° СЃ РєРѕРЅС‚РµР№РЅРµСЂР°РјРё Рё РїСЂРѕРІР°Р№РґРµСЂР°РјРё
 
-### <a id="open-container"> Открытие контейнера ключа
+### <a id="open-container"> РћС‚РєСЂС‹С‚РёРµ РєРѕРЅС‚РµР№РЅРµСЂР° РєР»СЋС‡Р°
 
 ```csharp
 var provider =
@@ -365,7 +369,7 @@ using (var gost = new Gost3410_2012_256CryptoServiceProvider(cpsParams))
 }
 ```
 
-### <a id="create-container"> Создание ключевого контейнера (требует гамму)
+### <a id="create-container"> РЎРѕР·РґР°РЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РєРѕРЅС‚РµР№РЅРµСЂР° (С‚СЂРµР±СѓРµС‚ РіР°РјРјСѓ)
 
 ```csharp
 var provider =
@@ -381,26 +385,26 @@ var provider =
         });
 ```
 
-### <a id="set-oid"> Выставление OID
+### <a id="set-oid"> Р’С‹СЃС‚Р°РІР»РµРЅРёРµ OID
 
 https://github.com/CryptoPro/corefx/issues/45
 
-Провайдер для 2817 теперь можно задавать через новый конструктор
+РџСЂРѕРІР°Р№РґРµСЂ РґР»СЏ 2817 С‚РµРїРµСЂСЊ РјРѕР¶РЅРѕ Р·Р°РґР°РІР°С‚СЊ С‡РµСЂРµР· РЅРѕРІС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 ```csharp
 public Gost28147CryptoServiceProvider(CspParameters parameters)
 ```
 
-Выбор CipherOid для `Gost28147CryptoServiceProvider`, `Gost3410_XXXXCryptoServiceProvider` производится через одноименное свойство.
+Р’С‹Р±РѕСЂ CipherOid РґР»СЏ `Gost28147CryptoServiceProvider`, `Gost3410_XXXXCryptoServiceProvider` РїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ С‡РµСЂРµР· РѕРґРЅРѕРёРјРµРЅРЅРѕРµ СЃРІРѕР№СЃС‚РІРѕ.
 
-Список CipherOid - https://cpdn.cryptopro.ru/content/csp40/html/group___pro_c_s_p_ex_CP_PARAM_OIDS.html
+РЎРїРёСЃРѕРє CipherOid - https://cpdn.cryptopro.ru/content/csp40/html/group___pro_c_s_p_ex_CP_PARAM_OIDS.html
 
 *****************
 
-Ниже оригинальные комментарии. Логика должна быть аналогичной КриптоПро.NET.
+РќРёР¶Рµ РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Рµ РєРѕРјРјРµРЅС‚Р°СЂРёРё. Р›РѕРіРёРєР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ Р°РЅР°Р»РѕРіРёС‡РЅРѕР№ РљСЂРёРїС‚РѕРџСЂРѕ.NET.
 
-Для установки желаемого OID транспортного ключа необходимо выставить его через свойство CipherOid в объекте **открытого ключа**
+Р”Р»СЏ СѓСЃС‚Р°РЅРѕРІРєРё Р¶РµР»Р°РµРјРѕРіРѕ OID С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ РєР»СЋС‡Р° РЅРµРѕР±С…РѕРґРёРјРѕ РІС‹СЃС‚Р°РІРёС‚СЊ РµРіРѕ С‡РµСЂРµР· СЃРІРѕР№СЃС‚РІРѕ CipherOid РІ РѕР±СЉРµРєС‚Рµ **РѕС‚РєСЂС‹С‚РѕРіРѕ РєР»СЋС‡Р°**
 
-Пример установки OID для транспортного ключа:
+РџСЂРёРјРµСЂ СѓСЃС‚Р°РЅРѕРІРєРё OID РґР»СЏ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ РєР»СЋС‡Р°:
 ```csharp
 var gost = (Gost3410_2012_256CryptoServiceProvider)cert.PrivateKey;
 var gostRes = (Gost3410_2012_256CryptoServiceProvider)certRes.PrivateKey;      
@@ -418,16 +422,16 @@ var agreeRes = (GostSharedSecretCryptoServiceProvider)gostRes.CreateAgree(gostPk
 var key = agreeRes.Unwrap(wrappedKeyBytesArray, GostKeyWrapMethod.CryptoProKeyWrap);
 ```
 
-ps. При использовании метода ExportParameters(false) для **закрытого ключа** может не заполнится поле EncryptionParamSet возвращаемого объекта Gost3410Parameters и тогда будет использоваться Oid по умолчанию, вне зависимости от проставленного OID в закртытом ключе. Можно исправить руками, выставив в Gost3410Parameters.EncryptionParamSet нужное значение:
+ps. РџСЂРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё РјРµС‚РѕРґР° ExportParameters(false) РґР»СЏ **Р·Р°РєСЂС‹С‚РѕРіРѕ РєР»СЋС‡Р°** РјРѕР¶РµС‚ РЅРµ Р·Р°РїРѕР»РЅРёС‚СЃСЏ РїРѕР»Рµ EncryptionParamSet РІРѕР·РІСЂР°С‰Р°РµРјРѕРіРѕ РѕР±СЉРµРєС‚Р° Gost3410Parameters Рё С‚РѕРіРґР° Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ Oid РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, РІРЅРµ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїСЂРѕСЃС‚Р°РІР»РµРЅРЅРѕРіРѕ OID РІ Р·Р°РєСЂС‚С‹С‚РѕРј РєР»СЋС‡Рµ. РњРѕР¶РЅРѕ РёСЃРїСЂР°РІРёС‚СЊ СЂСѓРєР°РјРё, РІС‹СЃС‚Р°РІРёРІ РІ Gost3410Parameters.EncryptionParamSet РЅСѓР¶РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ:
 ```csharp
 var paramsPk = gostRes.ExportParameters(false);
 paramsPk.EncryptionParamSet = gostResPk.CipherOid;            
 var agree = (GostSharedSecretCryptoServiceProvider)gost.CreateAgree(paramsPk);
 ```
 
-## <a id="key"> Ключевой транспорт, KeyWrap
+## <a id="key"> РљР»СЋС‡РµРІРѕР№ С‚СЂР°РЅСЃРїРѕСЂС‚, KeyWrap
 
-см примеры в https://github.com/CryptoPro/corefx/issues/43
+СЃРј РїСЂРёРјРµСЂС‹ РІ https://github.com/CryptoPro/corefx/issues/43
 
 ### <a id="key-wrap"> Symmetric KeyWrap
 
@@ -468,27 +472,27 @@ var key = agreeRes.Unwrap(wrappedKeyBytesArray, GostKeyWrapMethod.CryptoProKeyWr
 
 ### <a id="key-exchange"> Asymmetric KeyExchange (key encryption)
 
-Отправитель:
+РћС‚РїСЂР°РІРёС‚РµР»СЊ:
 ```csharp
-// Создаем случайный секретный ключ, который необходимо передать.
+// РЎРѕР·РґР°РµРј СЃР»СѓС‡Р°Р№РЅС‹Р№ СЃРµРєСЂРµС‚РЅС‹Р№ РєР»СЋС‡, РєРѕС‚РѕСЂС‹Р№ РЅРµРѕР±С…РѕРґРёРјРѕ РїРµСЂРµРґР°С‚СЊ.
 Gost28147 key = new Gost28147CryptoServiceProvider();
-// Синхропосылка не входит в GostKeyTransport и должна
-// передаваться отдельно.
+// РЎРёРЅС…СЂРѕРїРѕСЃС‹Р»РєР° РЅРµ РІС…РѕРґРёС‚ РІ GostKeyTransport Рё РґРѕР»Р¶РЅР°
+// РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РѕС‚РґРµР»СЊРЅРѕ.
 IV = key.IV;
 
-// Создаем форматтер, шифрующий на ассиметричном ключе получателя.
+// РЎРѕР·РґР°РµРј С„РѕСЂРјР°С‚С‚РµСЂ, С€РёС„СЂСѓСЋС‰РёР№ РЅР° Р°СЃСЃРёРјРµС‚СЂРёС‡РЅРѕРј РєР»СЋС‡Рµ РїРѕР»СѓС‡Р°С‚РµР»СЏ.
 GostKeyExchangeFormatter Formatter = new GostKeyExchangeFormatter(cert.PublicKey.Key as Gost3410_2012_512);
-// GostKeyTransport - формат зашифрованной для безопасной передачи
-// ключевой информации.
+// GostKeyTransport - С„РѕСЂРјР°С‚ Р·Р°С€РёС„СЂРѕРІР°РЅРЅРѕР№ РґР»СЏ Р±РµР·РѕРїР°СЃРЅРѕР№ РїРµСЂРµРґР°С‡Рё
+// РєР»СЋС‡РµРІРѕР№ РёРЅС„РѕСЂРјР°С†РёРё.
 GostKeyTransport encKey = Formatter.CreateKeyExchange(key);
 ```
 
-Получатель:
+РџРѕР»СѓС‡Р°С‚РµР»СЊ:
 ```csharp
-// Деформаттер для ключей, зашифрованных на ассиметричном ключе получателя.
+// Р”РµС„РѕСЂРјР°С‚С‚РµСЂ РґР»СЏ РєР»СЋС‡РµР№, Р·Р°С€РёС„СЂРѕРІР°РЅРЅС‹С… РЅР° Р°СЃСЃРёРјРµС‚СЂРёС‡РЅРѕРј РєР»СЋС‡Рµ РїРѕР»СѓС‡Р°С‚РµР»СЏ.
 GostKeyExchangeDeformatter Deformatter = new GostKeyExchangeDeformatter(cert.PrivateKey);
-// Получаем ГОСТ-овый ключ из GostKeyTransport.
+// РџРѕР»СѓС‡Р°РµРј Р“РћРЎРў-РѕРІС‹Р№ РєР»СЋС‡ РёР· GostKeyTransport.
 Gost28147 decryptedKey = (Gost28147)Deformatter.DecryptKeyExchange(encKey);
-// Устанавливаем синхропосылку.
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРёРЅС…СЂРѕРїРѕСЃС‹Р»РєСѓ.
 decryptedKey.IV = IV;
 ```
