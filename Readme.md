@@ -22,7 +22,7 @@
 * XML шифрование (`EncryptedXml`)
 
 ## Известные проблемы
-* При использовании исправлений сборок `System.Security.Pkcs` перед инициализацией бибилиотеки
+1. При использовании исправлений сборок `System.Security.Pkcs` перед инициализацией бибилиотеки
 необходимо создать объект класса `CmsSigner` для форсирования инициализации сборки.
 
 ```csharp
@@ -30,9 +30,15 @@ var signed = new CmsSigner();
 LibCore.Initializer.Initialize();
 ```
 
-* При использовании исправлений в System.Net перестаёт работать RSA TLS (но начинает ГОСТ). 
-Если необходимо использовать RSA TLS - не вызывать `Initialize()` с `All` и `Net`. 
-Если необходимо использовать в одной программе и ГОСТ и Rsa в рамках TLS - только ждать правок.
+2. Возможны проблемы при работе двухстороннего RSA TLS.
+Если необходимо использовать только RSA TLS, а LibCore ломает существующий код - возможно 
+вызвать инициализацию без установки исправлений для System.Net.
+
+```csharp
+LibCore.Initializer.Initialize(
+    LibCore.Initializer.DetouredAssembly.Xml |
+    LibCore.Initializer.DetouredAssembly.Pkcs); 
+```
 
 ## Примеры
 
