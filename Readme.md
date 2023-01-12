@@ -19,16 +19,18 @@
 В настоящий момент в работе/не реализовано:
 
 * CMS шифрование (`EnvelopedCms`)
-* XML шифрование (`EncryptedXml`)
 
 ## Известные проблемы
 1. При использовании исправлений сборок `System.Security.Pkcs` перед инициализацией бибилиотеки
+возможно появление runtime ошибок разрешения сборок `System.Security.Pkcs`. Для их исправления
 необходимо создать объект класса `CmsSigner` для форсирования инициализации сборки.
 
 ```csharp
 var signed = new CmsSigner();
 LibCore.Initializer.Initialize();
 ```
+
+**NB:** если данные проблемы ещё встречаются - просьба сообщить открыв Issue на Github а данном проекте.
 
 2. Возможны проблемы при работе двухстороннего RSA TLS.
 Если необходимо использовать только RSA TLS, а LibCore ломает существующий код - возможно 
@@ -49,7 +51,8 @@ LibCore.Initializer.Initialize(
  - [SignedXml](#signed-xml)
    - [Подпись](#signed-xml-sign)
    - [Проверка](#signed-xml-verify)
-- [SignedCms](#signed-cms)
+ - [EncryptedXml](#encrypted-xml) (СКОРО)
+ - [SignedCms](#signed-cms)
   - [Attached](#signed-cms-attached)
   - [Detached](#signed-cms-detached)  
  - [Работа с контейнерами и провайдерами](#container)
@@ -120,7 +123,7 @@ namespace Sample
 }
 ```
 
-## <a id="file-pfx"> Загрузка сертификата из хранилища
+## <a id="store-pfx"> Загрузка сертификата из хранилища
 ```csharp
 // unix, using CpX509Store
 using (var store = new CpX509Store(StoreName.My, StoreLocation.CurrentUser))
