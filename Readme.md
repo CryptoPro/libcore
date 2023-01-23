@@ -2,7 +2,7 @@
 
 [Текущий релиз](https://github.com/CryptoPro/libcore/releases).
 
-Для работы библиотеки необходима последняя актуальная версия КриптоПро CSP 5.0.
+**Для корректной работы библиотеки необходима последняя актуальная версия КриптоПро CSP 5.0.**
 
 Также необходима установка [sdk и runtime dotnet 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 
