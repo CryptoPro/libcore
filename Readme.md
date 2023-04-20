@@ -325,7 +325,7 @@ static bool ValidateXmlFIle(XmlDocument xmlDocument)
 ### <a id="signed-cms-attached"> Формирование и проверка присоединённой подписи:
 ```csharp
 byte[] signature;
-using (var gostCert = GostNonPersistCmsTests.GetGost2012_256Certificate())
+using (x509Certificate2 gostCert = GetGostX509Certificate2Somehow())
 {
     var contentInfo = new ContentInfo(bytesToHash);
     var signedCms = new SignedCms(contentInfo, false);
@@ -377,14 +377,12 @@ signedCmsVerify.CheckSignature(true);
 ### <a id="open-container"> Открытие контейнера ключа
 
 ```csharp
-var provider =
+using (var provider =
     new Gost3410_2012_256CryptoServiceProvider(
         new CspParameters(
             80,
             "",
-            "\\\\.\\HDIMAGE\\G2012256"));
-
-using (var gost = new Gost3410_2012_256CryptoServiceProvider(cpsParams))
+            "\\\\.\\HDIMAGE\\G2012256")))
 {
 
 }
@@ -393,7 +391,7 @@ using (var gost = new Gost3410_2012_256CryptoServiceProvider(cpsParams))
 ### <a id="create-container"> Создание ключевого контейнера (требует гамму)
 
 ```csharp
-var provider =
+using (var provider =
     new Gost3410_2012_256CryptoServiceProvider(
         new CspParameters()
         {
@@ -403,7 +401,10 @@ var provider =
             ProviderType = 80,
             KeyPassword = new SecureString(),
             KeyNumber = keyNumber
-        });
+        }))
+{
+
+}        
 ```
 
 ### <a id="set-oid"> Выставление OID
