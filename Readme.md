@@ -21,7 +21,11 @@
 * CMS шифрование (`EnvelopedCms`)
 
 ## Известные проблемы
-1. При использовании исправлений сборок `System.Security.Pkcs` перед инициализацией бибилиотеки
+### 1. Ошибка разрешения сбоки `System.Security.Pkcs` при инициализации
+
+**NB:** если данная проблема ещё встречаются - просьба сообщить открыв Issue на Github а данном проекте. В настоящий момент должна быть исправлена.
+
+При использовании исправлений сборок `System.Security.Pkcs` перед инициализацией бибилиотеки
 возможно появление runtime ошибок разрешения сборок `System.Security.Pkcs`. Для их исправления
 необходимо создать объект класса `CmsSigner` для форсирования инициализации сборки.
 
@@ -30,9 +34,10 @@ var signed = new CmsSigner();
 LibCore.Initializer.Initialize();
 ```
 
-**NB:** если данные проблемы ещё встречаются - просьба сообщить открыв Issue на Github а данном проекте.
+### 2. Возможны проблемы при работе двухстороннего RSA TLS.
 
-2. Возможны проблемы при работе двухстороннего RSA TLS.
+**NB:** если данная проблема ещё встречаются - просьба сообщить открыв Issue на Github а данном проекте. В настоящий момент должна быть исправлена.
+
 Если необходимо использовать только RSA TLS, а LibCore ломает существующий код - возможно 
 вызвать инициализацию без установки исправлений для System.Net.
 
@@ -41,6 +46,17 @@ LibCore.Initializer.Initialize(
     LibCore.Initializer.DetouredAssembly.Xml |
     LibCore.Initializer.DetouredAssembly.Pkcs); 
 ```
+
+### 3. Ошибка при многократном повторении вызово на CentOs/Red OS
+На данных операционных системах возможно возникновение runtime ошибок при многократных вызовах, вызванных [tired compilation](https://learn.microsoft.com/en-us/dotnet/core/runtime-config/compilation). Отключить её можно через `csproj` проекта следующим образом
+
+```xml
+<PropertyGroup>
+    <TieredCompilation>false</TieredCompilation>
+</PropertyGroup>
+```
+
+[Подробнее](https://github.com/CryptoPro/libcore/issues/7)
 
 ## Примеры
 
