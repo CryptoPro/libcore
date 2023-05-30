@@ -16,12 +16,12 @@
 
 Интерфейсы и классы во многом аналогичны corefx и КриптоПро.NET.
 
-В настоящий момент в работе/не реализовано:
+### В настоящий момент в работе/не реализовано:
 
-* CMS шифрование (`EnvelopedCms`)
+* 
 
 ## Известные проблемы
-### 1. Ошибка разрешения сбоки `System.Security.Pkcs` при инициализации
+### 1. (исправлена) Ошибка разрешения сбоки `System.Security.Pkcs` при инициализации
 
 **NB:** если данная проблема ещё встречаются - просьба сообщить открыв Issue на Github а данном проекте. В настоящий момент должна быть исправлена.
 
@@ -34,7 +34,7 @@ var signed = new CmsSigner();
 LibCore.Initializer.Initialize();
 ```
 
-### 2. Возможны проблемы при работе двухстороннего RSA TLS.
+### 2. (исправлена) Возможны проблемы при работе двухстороннего RSA TLS.
 
 **NB:** если данная проблема ещё встречаются - просьба сообщить открыв Issue на Github а данном проекте. В настоящий момент должна быть исправлена.
 
@@ -55,10 +55,21 @@ LibCore.Initializer.Initialize(
     <TieredCompilation>false</TieredCompilation>
 </PropertyGroup>
 ```
-
 [Подробнее](https://github.com/CryptoPro/libcore/issues/7)
 
+### 4. Ошибка при работе EnvelopedCms на не-ГОСТовых сертификатах
+В настоящий момент исправления `EnvelopedCms` работают только с ГОСТовыми ключами, ломая сценарий RSA. Если в проекте необходимо воспрользоваться RSA и/или ГОСТом одновременно - можно отключить установку исправлений для `EnvelopedCms`. 
+
+```csharp
+LibCore.Initializer.Initialize(
+    debugFlags: LibCore.Initializer.DebugFlags.DisableEnvelopedCmsDetours);
+
+```
+
+После её отключения для шифрования/расшифрования на ГОСТовых ключах необходимо использовать класс `CpEnvelopedCms`, для RSA ключей - `EnvelopedCms`.
+
 ## Примеры
+Большинство примеров из КриптоПро.NET и corefx работают с небольшими изменениями.
 
  - [Установка и инициализация библиотеки](#init) 
  - [Загрузка сертификата из pfx файла](#file-pfx) 
@@ -71,6 +82,7 @@ LibCore.Initializer.Initialize(
  - [SignedCms](#signed-cms)
   - [Attached](#signed-cms-attached)
   - [Detached](#signed-cms-detached)  
+ - [EnvelopedCms](#enveloped-cms) (СКОРО)
  - [Работа с контейнерами и провайдерами](#container)
     - [Открытие контейнера ключа](#open-container)
     - [Создание ключевого контейнера](#create-container)
