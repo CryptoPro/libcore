@@ -88,9 +88,9 @@ LibCore.Initializer.Initialize(
     - [Создание ключевого контейнера](#create-container)
     - [Выставление OID](#set-oid)
  - [Ключевой транспорт, KeyWrap](#key)
-  - [Symmetric KeyWrap](#key-wrap)
-  - [Asymmetric agree (DH)](#key-agree)
-  - [Asymmetric KeyExchange (key encryption)](#key-exchange)
+   - [Symmetric KeyWrap](#key-wrap)
+   - [Asymmetric agree (DH)](#key-agree)
+   - [Asymmetric KeyExchange (key encryption)](#key-exchange)
 
 ## <a id="init"> Установка и инициализация библиотеки
 Скачать nuget пакет `LibCore.Linux.XXXX.XX.XX.nupkg` или `LibCore.Windows.XXXX.XX.XX.nupkg` из текущего [релиза](https://github.com/CryptoPro/libcore/releases)
