@@ -2,7 +2,7 @@
 
 [Текущий релиз](https://github.com/CryptoPro/libcore/releases).
 
-**ВАЖНО!!! Для корректной работы библиотеки необходима актуальная версия КриптоПро CSP 5.0. 12600**
+**ВАЖНО!!! Для корректной работы библиотеки необходима актуальная версия КриптоПро CSP 5.0. 12900**
 
 Также необходима установка [sdk и runtime dotnet 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 
@@ -70,9 +70,12 @@ LibCore.Initializer.Initialize(
 
 
 ### 4. Ошибка при работе EnvelopedCms в Csp 5.0 12800
+
+**NB:** Исправлена в 5.0 12900.
+
 Наблюдается ошибка при работе `EnvelopedCms`. [Разбираемся](https://github.com/CryptoPro/libcore/issues/17).
 
-Версия 12600 - рабочая.
+Версия 12600 - рабочая. Версия 12900 содержит исправление.
 
 ## Примеры
 Большинство примеров из КриптоПро.NET и corefx работают с небольшими изменениями.
@@ -364,6 +367,13 @@ using (x509Certificate2 gostCert = GetGostX509Certificate2Somehow())
     var contentInfo = new ContentInfo(bytesToHash);
     var signedCms = new SignedCms(contentInfo, false);
     CmsSigner cmsSigner = new CmsSigner(gostCert);
+
+    // Добавляем время подписания в атрибуты, если необходимо
+    // cmsSigner.SignedAttributes.Add(new Pkcs9SigningTime(DateTime.Now));
+
+    // Добавляем сертификат в атрибуты, если необходимо
+    // cmsSigner.SignedAttributes.Add(new PkcsSigningCertificateV2(gostCert));
+
     signedCms.ComputeSignature(cmsSigner);
     signature = signedCms.Encode();
     Console.WriteLine($"CMS Sign: {Convert.ToBase64String(signature)}");
@@ -382,7 +392,7 @@ signedCmsVerify.CheckSignature(true);
 ### <a id="signed-cms-detached"> Формирование и проверка отсоединённой подписи:
 ```csharp
 byte[] signature;
-using (var gostCert = GostNonPersistCmsTests.GetGost2012_256Certificate())
+using (var gostCert = GetGostX509Certificate2Somehow())
 {
     var contentInfo = new ContentInfo(bytesToHash);
     var signedCms = new SignedCms(contentInfo, true);
